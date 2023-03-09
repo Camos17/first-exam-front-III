@@ -1,1 +1,5 @@
-# first-exam-front-III
+## Para correr el proyecto
+
+`npm install`
+
+`npm run dev`
