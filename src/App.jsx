@@ -6,15 +6,17 @@ function App() {
   const [nombre, setNombre] = useState('');
   const [cancion, setCancion] = useState('');
 
-  const [isFormValid, setFormValidation] = useState(false);
-
+  const [isFormNameValid, setFormNameValidation] = useState(false);
+  const [isFormSongValid, setFormSongValidation] = useState(false);
 
   const handlerChangeName = (e) => {
     console.log('evento nombre', e.target.value);
     let name = e.target.value;
-    if (name.length <= 3) {
-      setFormValidation(true);
-      console.log('El nombre tienes menos de 3 caracteres..!', isFormValid);
+    if (name.length >= 3) {
+      setFormNameValidation(true);
+      console.log('El nombre tienes menos de 3 caracteres..!', isFormNameValid);
+    } else {
+      setFormNameValidation(false);
     }
     setNombre(name.trim());
     
@@ -25,8 +27,10 @@ function App() {
     let cancion = e.target.value;
 
     if (cancion.length > 6) {
-      setFormValidation(true);
-      console.log('La cancion tiene mas de 6 caracteres..!', isFormValid);
+      setFormSongValidation(true);
+      console.log('La cancion tiene mas de 6 caracteres..!', isFormSongValid);
+    } else {
+      setFormSongValidation(false);
     }
     setCancion(e.target.value);
   };
@@ -65,17 +69,17 @@ function App() {
             name="cancion"
             value={cancion}
             onChange={handlerChangeCancion}
-
           />
 
-          <button type="submit" disabled={isFormValid}>Enviar</button>
+          <button type="submit" disabled={!isFormNameValid || !isFormSongValid}>Enviar</button>
 
 
         </form>
       </div>
-      <Card nombre={nombre} cancion={cancion}/>
+      {isFormNameValid && isFormSongValid ? <Card nombre={nombre} cancion={cancion}/> : ''}
     </Fragment>
   );
 }
 
 export default App;
+
